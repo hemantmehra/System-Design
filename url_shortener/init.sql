@@ -1,0 +1,5 @@
+CREATE TABLE URLS
+(
+    ID serial NOT NULL PRIMARY KEY,
+    URL text
+);
