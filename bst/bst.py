@@ -71,11 +71,11 @@ def bst_create(l):
         root = bst_insert(root, i)
     return root
 
-def bst_height(root):
+def bst_depth(root):
     if not root:
         return 0
-    lh = bst_height(root.left)
-    rh = bst_height(root.right)
+    lh = bst_depth(root.left)
+    rh = bst_depth(root.right)
     return 1 + max(lh, rh)
 
 def bst_successor(root, val):
@@ -103,3 +103,35 @@ def bst_predecessor(root, val):
         else:
             curr = curr.left
     return res
+
+def bst_diameter(root):
+    res = [0]
+    def _diameter(root, res):
+        if not root:
+            return 0
+        
+        lh = _diameter(root.left, res)
+        rh = _diameter(root.right, res)
+        res[0] = max(res[0], lh + rh)
+        return 1 + max(lh, rh)
+
+    _diameter(root, res)
+    return res[0]
+
+def bst_nth(root, n):
+    stack = []
+    curr = root
+    i = 0
+    while True:
+        if curr:
+            stack.append(curr)
+            curr = curr.left
+        else:
+            if len(stack) == 0:
+                break
+            curr = stack.pop()
+            i += 1
+            if i >= n:
+                return curr.val
+            curr = curr.right
+    return None

@@ -1,6 +1,7 @@
 import random
-from bst import bst_create, bst_inorder, bst_search, bst_height
+from bst import bst_create, bst_inorder, bst_search, bst_depth
 from bst import bst_inorder_iter, bst_successor, bst_predecessor
+from bst import bst_nth
 
 def get_sample_bst(n):
     l = list(range(n))
@@ -22,11 +23,11 @@ def test_bst_search():
     assert n1.val == 6
     assert n2 == None
 
-def test_bst_height():
+def test_bst_depth():
     bst = get_sample_bst(20)
-    lh = bst_height(bst.left)
-    lr = bst_height(bst.right)
-    h = bst_height(bst)
+    lh = bst_depth(bst.left)
+    lr = bst_depth(bst.right)
+    h = bst_depth(bst)
 
     assert h == 1 + max(lh, lr)
 
@@ -77,3 +78,21 @@ def test_predecessor():
     bst = get_sample_bst(30)
     res = bst_predecessor(bst, -1)
     assert res == None
+
+def test_nth():
+    bst = get_sample_bst(30)
+    val = bst_nth(bst, 5)
+    assert val == 4
+
+    bst = get_sample_bst(30)
+    val = bst_nth(bst, 30)
+    assert val == 29
+
+    bst = get_sample_bst(30)
+    val = bst_nth(bst, 100)
+    assert val == None
+
+    bst = get_sample_bst(30)
+    for i in range(30):
+        val = bst_nth(bst, i+1)
+        assert val == i
