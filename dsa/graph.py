@@ -42,3 +42,25 @@ def graph_topologial_sort(g):
     while stack:
         l.append(stack.pop())
     return l
+
+class DisjointSet:
+    def __init__(self, n):
+        self.rank = [0] * (n + 1)
+        self.parent = list(range(n+1))
+
+    def find_parent(self, v):
+        while v != self.parent[v]:
+            v = self.parent[v]
+        return v
+    
+    def union(self, u, v):
+        pu = self.find_parent(u)
+        pv = self.find_parent(v)
+
+        if self.rank[pu] < self.rank[pv]:
+            self.parent[pu] = pv
+        elif self.rank[pu] > self.rank[pv]:
+            self.parent[pv] = pu
+        else:
+            self.rank[pu] += 1
+            self.parent[pv] = pu
